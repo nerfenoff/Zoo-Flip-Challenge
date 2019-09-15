@@ -15,6 +15,7 @@ public class PlatformInteract : MonoBehaviour
 
     PlayerController PC;
     bool isMoved = false;
+    bool isOnPlatform;
     private void Start()
     {
         //Debug.Log(transform.parent.transform.parent.name);
@@ -37,22 +38,29 @@ public class PlatformInteract : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isMoved && collision.gameObject.tag == "Player")
-        {
-            isMoved = true;
-            Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
-            rb.bodyType = RigidbodyType2D.Kinematic;
-            collision.transform.SetParent(transform);
-            gameManager.ToNextPlatform((RectTransform)transform);
-            GetComponentInChildren<Text>().text = gameManager.CurrentScore.ToString();
-        }
+        if(collision.gameObject.tag == "Player")
+            if (!isMoved && !isOnPlatform)
+            {
+                isMoved = true;
+                Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
+                rb.bodyType = RigidbodyType2D.Kinematic;
+                collision.transform.SetParent(transform);
+                gameManager.ToNextPlatform((RectTransform)transform);
+                GetComponentInChildren<Text>().text = gameManager.CurrentScore.ToString();
+                isOnPlatform = true;
+            }
+            else if (isOnPlatform && !PlayerController.isKeepForce && !PlayerController.isjump)
+            {
+                fallSpeed = 700f;
+            }
+       
     }
 
     IEnumerator FallPlatform()
     {
-        yield return new WaitWhile(() => !PC.isFalling);
+        yield return new WaitWhile(() => !PlayerController.isFalling);
         PlatformCollision.enabled = true;
         Destroy(PlatformTrigger);
-        PC.isFalling = false;
+        PlayerController.isFalling = false;
     }
 }

@@ -2956,8 +2956,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1497566351}
   titleScreen: {fileID: 286907973}
-  ScoreText: {fileID: 895178221}
-  CoinsText: {fileID: 76376824}
 --- !u!114 &1497566348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3015,6 +3013,8 @@ MonoBehaviour:
   spawnZone: {fileID: 1352498784}
   platformToSpawn: {fileID: 3681790619011064434, guid: e23722378b1b91d47afe44084f29ecb0,
     type: 3}
+  ScoreText: {fileID: 895178221}
+  CoinsText: {fileID: 76376824}
   maxScore: 0
   CurrentScore: 0
 --- !u!1 &1507430529

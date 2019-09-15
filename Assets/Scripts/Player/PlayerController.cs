@@ -7,12 +7,12 @@ public class PlayerController : MonoBehaviour
     public GameObject Player;
     public float ForceScale = 8f;
     [HideInInspector]
-    public bool isFalling = false;
+    public static bool isFalling = false;
 
 
     float JumpForce = 1;
-    bool isjump = false;
-    bool isKeepForce = false;
+    public static bool isjump = false;
+    public static bool isKeepForce = false;
     Rigidbody2D rb;
 
 
@@ -37,8 +37,11 @@ public class PlayerController : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        isKeepForce = true;
-        StartCoroutine(KeepForce());
+        if (!isjump)
+        {
+            isKeepForce = true;
+            StartCoroutine(KeepForce());
+        }
     }
 
     private void OnMouseUp()

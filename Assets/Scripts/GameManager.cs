@@ -1,15 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public RectTransform spawnZone;
     public GameObject platformToSpawn;
-    RectTransform platform;
+
+    public Text ScoreText;
+    public Text CoinsText;
+
     public int maxScore = 0;
     public int CurrentScore = 0;
 
+    RectTransform platform;
+
+    private void Start()
+    {
+        maxScore = PlayerPrefs.GetInt("MaxScore");
+        ScoreText.text = maxScore.ToString();
+    }
+    private void FixedUpdate()
+    {
+        if(!PlayerKiller.isAlive)
+        {
+            if (CurrentScore > maxScore)
+            {
+                maxScore = CurrentScore;
+                PlayerPrefs.SetInt("MaxScore", maxScore);
+            }
+            ScoreText.text = maxScore.ToString();
+            SceneManager.LoadScene(0);
+        }
+    }
     public void ToNextPlatform(RectTransform previos)
     {
         platform = previos;

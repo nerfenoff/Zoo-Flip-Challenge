@@ -7,8 +7,6 @@ public class ScreenManager : MonoBehaviour
 {
     public GameManager gameManager;
     public GameObject titleScreen;
-    public Text ScoreText;
-    public Text CoinsText;
 
     private void OnMouseDown()
     {
@@ -16,8 +14,4 @@ public class ScreenManager : MonoBehaviour
             titleScreen.SetActive(false);
     }
 
-    private void FixedUpdate()
-    {
-        ScoreText.text = gameManager.CurrentScore.ToString();
-    }
 }
