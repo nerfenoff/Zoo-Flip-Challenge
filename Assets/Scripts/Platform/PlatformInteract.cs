@@ -23,7 +23,7 @@ public class PlatformInteract : MonoBehaviour
     {
         if (!isMoved)
             return;
-        gameObject.transform.localPosition = Vector3.MoveTowards(gameObject.transform.localPosition, new Vector3(0, -Screen.height/2, 0), fallSpeed * Time.deltaTime);
+        gameObject.transform.localPosition = Vector3.MoveTowards(gameObject.transform.localPosition, new Vector3(0, -Screen.height, 0), fallSpeed * Time.deltaTime);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
