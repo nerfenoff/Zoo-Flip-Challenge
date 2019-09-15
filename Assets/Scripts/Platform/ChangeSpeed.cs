@@ -8,7 +8,9 @@ public class ChangeSpeed : MonoBehaviour
     {
         if (collision.tag == "Platform")
         {
-            collision.gameObject.GetComponent<PlatformInteract>().fallSpeed = 30f;
+            PlatformInteract platformInteract = collision.gameObject.GetComponent<PlatformInteract>();
+            if (platformInteract)
+                platformInteract.fallSpeed = 30f;
         }
     }
 }

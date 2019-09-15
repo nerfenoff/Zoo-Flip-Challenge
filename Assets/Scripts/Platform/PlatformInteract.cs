@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlatformInteract : MonoBehaviour
 {
@@ -16,8 +17,9 @@ public class PlatformInteract : MonoBehaviour
     bool isMoved = false;
     private void Start()
     {
-        PC = transform.parent.GetComponent<PlayerController>();
-        
+        //Debug.Log(transform.parent.transform.parent.name);
+        PC = transform.parent.transform.parent.GetComponent<PlayerController>();
+
     }
     private void Update()
     {
@@ -42,6 +44,7 @@ public class PlatformInteract : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Kinematic;
             collision.transform.SetParent(transform);
             gameManager.ToNextPlatform((RectTransform)transform);
+            GetComponentInChildren<Text>().text = gameManager.CurrentScore.ToString();
         }
     }
 

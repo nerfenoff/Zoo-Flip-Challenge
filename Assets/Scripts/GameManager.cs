@@ -7,13 +7,14 @@ public class GameManager : MonoBehaviour
     public RectTransform spawnZone;
     public GameObject platformToSpawn;
     RectTransform platform;
-    public int score;
+    public int maxScore = 0;
+    public int CurrentScore = 0;
 
     public void ToNextPlatform(RectTransform previos)
     {
         platform = previos;
-        score += 1;
-        RectTransform newPlatform = (RectTransform)Instantiate<GameObject>(platformToSpawn, (RectTransform)transform).transform;
+        CurrentScore += 1;
+        RectTransform newPlatform = (RectTransform)Instantiate<GameObject>(platformToSpawn, (RectTransform)spawnZone.parent).transform;
         newPlatform.localPosition = new Vector3(0f, Screen.width, 0f);
         newPlatform.GetComponent<PlatformInteract>().gameManager = this;
         newPlatform.ForceUpdateRectTransforms();
