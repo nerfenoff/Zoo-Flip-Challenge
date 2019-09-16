@@ -14,16 +14,19 @@ public class GameManager : MonoBehaviour
 
     public int maxScore = 0;
     public int CurrentScore = 0;
-
+    public int coins = 0;
     RectTransform platform;
 
     private void Start()
     {
         maxScore = PlayerPrefs.GetInt("MaxScore");
+        coins = PlayerPrefs.GetInt("Coins");
         ScoreText.text = maxScore.ToString();
+        CoinsText.text = coins.ToString();
     }
     private void FixedUpdate()
     {
+        CoinsText.text = coins.ToString();
         if(!PlayerKiller.isAlive)
         {
             if (CurrentScore > maxScore)
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("MaxScore", maxScore);
             }
             ScoreText.text = maxScore.ToString();
+            PlayerPrefs.SetInt("Coins", coins);
             SceneManager.LoadScene(0);
         }
     }
@@ -55,6 +59,6 @@ public class GameManager : MonoBehaviour
             newPlatformTransform.localPosition = Vector3.MoveTowards(newPlatformTransform.localPosition, point, 700f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        platform.parent = newPlatformTransform;
+        platform.SetParent(newPlatformTransform);
     }
 }

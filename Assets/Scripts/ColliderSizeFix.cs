@@ -6,9 +6,9 @@ public class ColliderSizeFix : MonoBehaviour
 {
 
     [SerializeField]
-    BoxCollider2D collider2d;
+    BoxCollider2D collider2d = null;
     [SerializeField]
-    BoxCollider collider;
+    BoxCollider collider = null;
 
     private void Start()
     {

@@ -18,8 +18,7 @@ public class PlatformInteract : MonoBehaviour
     bool isOnPlatform;
     private void Start()
     {
-        //Debug.Log(transform.parent.transform.parent.name);
-        PC = transform.parent.transform.parent.GetComponent<PlayerController>();
+        PC = GetComponentInParent<PlayerController>();
 
     }
     private void Update()
@@ -38,7 +37,7 @@ public class PlatformInteract : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
             if (!isMoved && !isOnPlatform)
             {
                 isMoved = true;
@@ -49,18 +48,18 @@ public class PlatformInteract : MonoBehaviour
                 GetComponentInChildren<Text>().text = gameManager.CurrentScore.ToString();
                 isOnPlatform = true;
             }
-            else if (isOnPlatform && !PlayerController.isKeepForce && !PlayerController.isjump)
+            else if (isOnPlatform && !PC.isKeepForce && !PC.isjump)
             {
-                fallSpeed = 700f;
+                fallSpeed = 1400f;
             }
-       
+
     }
 
     IEnumerator FallPlatform()
     {
-        yield return new WaitWhile(() => !PlayerController.isFalling);
+        yield return new WaitWhile(() => !PC.isFalling);
         PlatformCollision.enabled = true;
         Destroy(PlatformTrigger);
-        PlayerController.isFalling = false;
+        PC.isFalling = false;
     }
 }
