@@ -9,7 +9,7 @@ public class PlatformInteract : MonoBehaviour
     public float fallSpeed  = 10;
     public GameManager gameManager;
     [SerializeField]
-    BoxCollider2D PlatformCollision;
+    BoxCollider2D[] PlatformCollision;
     [SerializeField]
     BoxCollider2D PlatformTrigger;
 
@@ -43,6 +43,7 @@ public class PlatformInteract : MonoBehaviour
                 isMoved = true;
                 Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
                 rb.bodyType = RigidbodyType2D.Kinematic;
+                rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 collision.transform.SetParent(transform);
                 gameManager.ToNextPlatform((RectTransform)transform);
                 GetComponentInChildren<Text>().text = gameManager.CurrentScore.ToString();
@@ -58,7 +59,8 @@ public class PlatformInteract : MonoBehaviour
     IEnumerator FallPlatform()
     {
         yield return new WaitWhile(() => !PC.isFalling);
-        PlatformCollision.enabled = true;
+        foreach (Collider2D collider in PlatformCollision)
+            collider.enabled = true;
         Destroy(PlatformTrigger);
         PC.isFalling = false;
     }

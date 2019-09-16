@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
-        Debug.Log(isKeepForce);
         if (!isjump)
         {
             isFalling = false;
@@ -37,22 +36,23 @@ public class PlayerController : MonoBehaviour
         
         if(!isFalling && rb.velocity.y <= 0)
         {
+            StartCoroutine(AvalibaleJumping());
             isFalling = true;
             isjump = false;
         }
 
     }
 
-    private void LateUpdate()
-    {
-        if (rb.velocity.y == 0)
-        {
-            isCanJump = true;
-            isMove = true;
-        }
-        else
-            isMove = false;
-    }
+    //private void LateUpdate()
+    //{
+    //    if (rb.velocity.y == 0)
+    //    {
+    //        isCanJump = true;
+    //        isMove = true;
+    //    }
+    //    else
+    //        isMove = false;
+    //}
     private void OnMouseDown()
     {
 
@@ -65,6 +65,13 @@ public class PlayerController : MonoBehaviour
         isKeepForce = false;
     }
 
+    IEnumerator AvalibaleJumping()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitWhile(() => rb.velocity.y != 0);
+        isCanJump = true;
+    }
     IEnumerator KeepForce()
     {
         yield return new WaitWhile(() => !isCanJump);
