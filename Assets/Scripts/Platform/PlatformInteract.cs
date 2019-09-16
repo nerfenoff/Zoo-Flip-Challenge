@@ -16,8 +16,6 @@ public class PlatformInteract : MonoBehaviour
     PlayerController PC;
     bool isMoved = false;
     bool isOnPlatform;
-    bool b = true;
-    bool isStart = false;
     bool isJump = false;
     private void Start()
     {
@@ -30,14 +28,6 @@ public class PlatformInteract : MonoBehaviour
         RectTransform rectTransformPlatform = (RectTransform)transform;
         if (!isMoved)
         {
-            //if (b)
-            //{
-            //    if (rectTransformPlatform.position.y <= rectTransformPlayer.position.y)
-            //    {
-            //        if(!isStart)
-            //            StartCoroutine(FallPlatform());
-            //    }
-            //}
             return;
         }
 
@@ -51,8 +41,7 @@ public class PlatformInteract : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            if (!isStart)
-                StartCoroutine(FallPlatform());
+            StartCoroutine(FallPlatform());
         }
     }
 
@@ -78,13 +67,11 @@ public class PlatformInteract : MonoBehaviour
     }
 
     IEnumerator FallPlatform()
-    {
-        isStart = true;        
+    {      
         yield return new WaitWhile(() => !PC.isFalling);
         foreach (Collider2D collider in PlatformCollision)
             collider.enabled = true;
         Destroy(PlatformTrigger);
         PC.isFalling = false;
-        b = false;
     }
 }

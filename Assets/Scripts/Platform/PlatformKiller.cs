@@ -8,9 +8,6 @@ public class PlatformKiller : MonoBehaviour
     {
         if(collision.tag == "Platform")
         {
-            //if(collision.transform.childCount > 0)
-            //    PlayerKiller.isAlive = false;
-
             Destroy(collision.gameObject);
         }
     }

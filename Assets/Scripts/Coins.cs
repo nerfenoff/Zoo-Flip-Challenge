@@ -19,7 +19,7 @@ public class Coins : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            ++gameManager.coins;
+            gameManager.AddCoin();
             Destroy(gameObject);
         }
     }
