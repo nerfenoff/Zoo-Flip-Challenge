@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
             }
             ScoreText.text = maxScore.ToString();
             PlayerPrefs.SetInt("Coins", coins);
-            SceneManager.LoadScene(0);
+            //SceneManager.LoadScene(0);
+            
         }
     }
     public void ToNextPlatform(RectTransform previos)

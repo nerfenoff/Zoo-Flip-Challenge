@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ColliderSizeFix : MonoBehaviour
 {
-
     [SerializeField]
     BoxCollider2D collider2d = null;
     [SerializeField]

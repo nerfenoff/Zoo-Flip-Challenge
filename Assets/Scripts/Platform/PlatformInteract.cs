@@ -12,26 +12,47 @@ public class PlatformInteract : MonoBehaviour
     BoxCollider2D[] PlatformCollision;
     [SerializeField]
     BoxCollider2D PlatformTrigger;
-
+    GameObject player;
     PlayerController PC;
     bool isMoved = false;
     bool isOnPlatform;
+    bool b = true;
+    bool isStart = false;
+    bool isJump = false;
     private void Start()
     {
         PC = GetComponentInParent<PlayerController>();
-
+        player = GameObject.Find("Player");
     }
     private void Update()
     {
+        RectTransform rectTransformPlayer = (RectTransform)player.transform;
+        RectTransform rectTransformPlatform = (RectTransform)transform;
         if (!isMoved)
+        {
+            //if (b)
+            //{
+            //    if (rectTransformPlatform.position.y <= rectTransformPlayer.position.y)
+            //    {
+            //        if(!isStart)
+            //            StartCoroutine(FallPlatform());
+            //    }
+            //}
             return;
+        }
+
+        if (rectTransformPlatform.position.y + 0.4f <= rectTransformPlayer.position.y)
+            isJump = true;
+
         gameObject.transform.localPosition = Vector3.MoveTowards(gameObject.transform.localPosition, new Vector3(0, -Screen.height, 0), fallSpeed * Time.deltaTime);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")
         {
-            StartCoroutine(FallPlatform());
+            if (!isStart)
+                StartCoroutine(FallPlatform());
         }
     }
 
@@ -49,7 +70,7 @@ public class PlatformInteract : MonoBehaviour
                 GetComponentInChildren<Text>().text = gameManager.CurrentScore.ToString();
                 isOnPlatform = true;
             }
-            else if (isOnPlatform && !PC.isKeepForce && !PC.isjump)
+            else if (isOnPlatform && !PC.isKeepForce && !PC.isjump && isJump && !PC.isFalling)
             {
                 fallSpeed = 1400f;
             }
@@ -58,10 +79,12 @@ public class PlatformInteract : MonoBehaviour
 
     IEnumerator FallPlatform()
     {
+        isStart = true;        
         yield return new WaitWhile(() => !PC.isFalling);
         foreach (Collider2D collider in PlatformCollision)
             collider.enabled = true;
         Destroy(PlatformTrigger);
         PC.isFalling = false;
+        b = false;
     }
 }

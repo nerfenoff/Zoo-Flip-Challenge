@@ -76,23 +76,25 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitWhile(() => !isCanJump);
         isKeepForce = true;
-        rb.useAutoMass = false;
-        rb.mass = 1;
+        //rb.useAutoMass = false;
+        //rb.mass = 1;
+        
         rb.gravityScale = 1f;
         while (isKeepForce)
         {
             JumpForce += ForceScale * Time.deltaTime;
-            JumpForce = Mathf.Clamp(JumpForce, 1f, 2500f);
+            JumpForce = Mathf.Clamp(JumpForce, 1f, 50f);
             Vector3 TargetScale = new Vector3(1f, 0.7f, 1f);
-            Player.transform.localScale = Vector3.MoveTowards(Player.transform.localScale, TargetScale, 0.2f * Time.deltaTime);
+            Player.transform.localScale = Vector3.MoveTowards(Player.transform.localScale, TargetScale, 0.25f * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        rb.useAutoMass = true;
+        //rb.useAutoMass = true;
         rb.gravityScale = 8f;
-        rb.AddForce(new Vector2(0, JumpForce), ForceMode2D.Force);
+        isjump = true;
+        rb.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
         Player.transform.localScale = Vector3.one;
         JumpForce = 1;
-        isjump = true;
+        
         isCanJump = false;
     }
 }
