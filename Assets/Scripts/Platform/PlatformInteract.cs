@@ -24,8 +24,6 @@ public class PlatformInteract : MonoBehaviour
         player = GameObject.Find("Player");
         minVelocity = Screen.height * (minVelocity / 100);
         maxVelocity = Screen.height * (maxVelocity / 100);
-        Debug.Log(minVelocity);
-        Debug.Log(maxVelocity);
         fallSpeed = maxVelocity;
     }
     private void Update()
