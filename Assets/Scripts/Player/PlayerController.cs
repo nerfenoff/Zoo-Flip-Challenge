@@ -1,11 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static bool isAlive;
+
     public GameObject Player;
     public float ForceScale = 8f;
+    public float pressScale = 0.25f;
     [HideInInspector]
     public bool isCanJump = true;
     [HideInInspector]
@@ -18,6 +20,10 @@ public class PlayerController : MonoBehaviour
     SoundManager soundManager;
     float JumpForce = 1;
 
+    private void Awake()
+    {
+        isAlive = true;
+    }
     private void Start()
     {
         isCanJump = true;
@@ -71,7 +77,7 @@ public class PlayerController : MonoBehaviour
             JumpForce += ForceScale * Time.deltaTime;
             JumpForce = Mathf.Clamp(JumpForce, 1f, 50f);
             Vector3 TargetScale = new Vector3(1f, 0.7f, 1f);
-            Player.transform.localScale = Vector3.MoveTowards(Player.transform.localScale, TargetScale, 0.25f * Time.deltaTime);
+            Player.transform.localScale = Vector3.MoveTowards(Player.transform.localScale, TargetScale, pressScale * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
 

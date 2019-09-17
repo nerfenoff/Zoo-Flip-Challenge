@@ -1,15 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlatformInteract : MonoBehaviour
 {
-
-    public float fallSpeed  = 10;
+    public float minVelocity = 10f;
+    public float maxVelocity = 700f;
+    [HideInInspector]
+    public float fallSpeed = 10f;
     public GameManager gameManager;
     [SerializeField]
-    BoxCollider2D[] PlatformCollision;
+    BoxCollider2D PlatformCollision;
     [SerializeField]
     BoxCollider2D PlatformTrigger;
     GameObject player;
@@ -21,9 +22,15 @@ public class PlatformInteract : MonoBehaviour
     {
         PC = GetComponentInParent<PlayerController>();
         player = GameObject.Find("Player");
+        minVelocity = Screen.height * (minVelocity / 100);
+        maxVelocity = Screen.height * (maxVelocity / 100);
+        Debug.Log(minVelocity);
+        Debug.Log(maxVelocity);
+        fallSpeed = maxVelocity;
     }
     private void Update()
     {
+        
         RectTransform rectTransformPlayer = (RectTransform)player.transform;
         RectTransform rectTransformPlatform = (RectTransform)transform;
         if (!isMoved)
@@ -61,7 +68,7 @@ public class PlatformInteract : MonoBehaviour
             }
             else if (isOnPlatform && !PC.isKeepForce && !PC.isjump && isJump && !PC.isFalling)
             {
-                fallSpeed = 1400f;
+                fallSpeed = maxVelocity * 2f;
             }
 
     }
@@ -69,8 +76,7 @@ public class PlatformInteract : MonoBehaviour
     IEnumerator FallPlatform()
     {      
         yield return new WaitWhile(() => !PC.isFalling);
-        foreach (Collider2D collider in PlatformCollision)
-            collider.enabled = true;
+        PlatformCollision.enabled = true;
         Destroy(PlatformTrigger);
         PC.isFalling = false;
     }

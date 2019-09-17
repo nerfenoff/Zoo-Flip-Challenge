@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChangeSpeed : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class ChangeSpeed : MonoBehaviour
         {
             PlatformInteract platformInteract = collision.gameObject.GetComponent<PlatformInteract>();
             if (platformInteract)
-                platformInteract.fallSpeed = 30f;
+                platformInteract.fallSpeed = platformInteract.minVelocity;
         }
     }
 }

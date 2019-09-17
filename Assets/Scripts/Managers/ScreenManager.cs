@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class ScreenManager : MonoBehaviour
 {
@@ -16,12 +13,12 @@ public class ScreenManager : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        
+        GetComponent<PlayerController>().isKeepForce = false;
     }
 
     private void Update()
     {
-        if (!PlayerKiller.isAlive)
+        if (!PlayerController.isAlive)
             restartButton.SetActive(true);
     }
 

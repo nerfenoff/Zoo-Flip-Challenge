@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,7 +27,7 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         CoinsText.text = coins.ToString();
-        if(!PlayerKiller.isAlive)
+        if(!PlayerController.isAlive)
         {
             if (CurrentScore > maxScore)
             {
@@ -62,10 +61,11 @@ public class GameManager : MonoBehaviour
     IEnumerator MoveToPoint(RectTransform newPlatformTransform)
     {
         Vector3 point = new Vector3(0f, spawnZone.localPosition.y + Random.Range(0f,spawnZone.rect.y), 0f);
-
+        yield return new WaitForEndOfFrame();
+        float velocity = newPlatformTransform.GetComponent<PlatformInteract>().maxVelocity;
         while(newPlatformTransform.localPosition.y > point.y)
         {
-            newPlatformTransform.localPosition = Vector3.MoveTowards(newPlatformTransform.localPosition, point, 700f * Time.deltaTime);
+            newPlatformTransform.localPosition = Vector3.MoveTowards(newPlatformTransform.localPosition, point, velocity * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
         platform.SetParent(newPlatformTransform);
